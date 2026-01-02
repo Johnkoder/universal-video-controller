@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "2x Video Speed Toggle",
+  "version": "1.0.0",
+  "description": "Press X to toggle video playback speed between 2x and normal on any website",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ]
+}
