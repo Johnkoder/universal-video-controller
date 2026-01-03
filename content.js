@@ -6,6 +6,7 @@
 
   let isDoubleSpeed = false;
   const TOGGLE_KEY = 'x'; // Change this to any key you prefer
+  const PAUSE_KEY = 'p'; // Press 'P' to pause/play
   const FAST_SPEED = 2.0;
   const NORMAL_SPEED = 1.0;
 
@@ -45,6 +46,73 @@
     showNotification(newSpeed, videoCount);
     
     console.log(`[2x Toggle] Speed set to ${newSpeed}x (${videoCount} video(s) affected)`);
+  }
+
+  // Toggle pause/play for all videos
+  function togglePause() {
+    const videos = getAllVideos();
+    let pausedCount = 0;
+    let playedCount = 0;
+    
+    videos.forEach(video => {
+      if (video.paused) {
+        video.play();
+        playedCount++;
+      } else {
+        video.pause();
+        pausedCount++;
+      }
+    });
+    
+    const isPaused = pausedCount > playedCount;
+    showPauseNotification(isPaused, videos.length);
+    
+    console.log(`[2x Toggle] ${isPaused ? 'Paused' : 'Playing'} (${videos.length} video(s) affected)`);
+  }
+
+  // Create and show pause notification
+  function showPauseNotification(isPaused, videoCount) {
+    const existing = document.getElementById('speed-toggle-notification');
+    if (existing) {
+      existing.remove();
+    }
+
+    const notification = document.createElement('div');
+    notification.id = 'speed-toggle-notification';
+    notification.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 24px;">${isPaused ? '⏸️' : '▶️'}</span>
+        <div>
+          <div style="font-weight: bold;">${isPaused ? 'Paused' : 'Playing'}</div>
+          <div style="font-size: 12px; opacity: 0.8;">${videoCount} video(s)</div>
+        </div>
+      </div>
+    `;
+    
+    Object.assign(notification.style, {
+      position: 'fixed',
+      top: '20px',
+      right: '20px',
+      backgroundColor: isPaused ? '#9c27b0' : '#4CAF50',
+      color: 'white',
+      padding: '12px 20px',
+      borderRadius: '8px',
+      zIndex: '2147483647',
+      fontFamily: 'Arial, sans-serif',
+      fontSize: '14px',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+      transition: 'opacity 0.3s ease',
+      opacity: '1'
+    });
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.style.opacity = '0';
+      setTimeout(() => {
+        notification.remove();
+      }, 300);
+    }, 1500);
   }
 
   // Create and show notification
@@ -113,6 +181,13 @@
       event.stopPropagation();
       toggleSpeed();
     }
+    
+    // Check if the pause key was pressed
+    if (event.key.toLowerCase() === PAUSE_KEY && !event.ctrlKey && !event.altKey && !event.metaKey) {
+      event.preventDefault();
+      event.stopPropagation();
+      togglePause();
+    }
   }, true);
 
   // Handle dynamically loaded videos (for SPAs like YouTube)
@@ -136,5 +211,5 @@
     }
   }, true);
 
-  console.log('[2x Toggle] Extension loaded. Press "X" to toggle video speed.');
+  console.log('[2x Toggle] Extension loaded. Press "X" to toggle video speed, "P" to pause/play.');
 })();
