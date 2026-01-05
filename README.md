@@ -6,6 +6,7 @@ A simple browser extension that toggles video playback speed between **2x** and 
 
 - 🎬 Works on **any website** with video content
 - ⌨️ Press **X** to toggle between 2x and normal speed
+- ⏸️ Press **Z** to pause/play videos
 - 🔔 Visual notification shows current speed
 - 🔄 Automatically applies to dynamically loaded videos (YouTube, SPAs)
 - 🎯 Smart detection - won't trigger while typing in input fields
@@ -32,7 +33,8 @@ A simple browser extension that toggles video playback speed between **2x** and 
 1. Go to any website with a video (YouTube, LinkedIn Learning, etc.)
 2. Press **X** on your keyboard to toggle 2x speed
 3. Press **X** again to return to normal speed
-4. A notification will appear showing the current speed
+4. Press **Z** to pause/play the video
+5. A notification will appear showing the current state
 
 ## Customization
 
@@ -40,6 +42,12 @@ To change the toggle key, edit `content.js` and modify this line:
 
 ```javascript
 const TOGGLE_KEY = 'x'; // Change to any key you prefer
+```
+
+To change the pause key:
+
+```javascript
+const PAUSE_KEY = 'z'; // Change to any key you prefer
 ```
 
 To change the fast speed, modify:

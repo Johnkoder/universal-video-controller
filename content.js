@@ -6,7 +6,7 @@
 
   let isDoubleSpeed = false;
   const TOGGLE_KEY = 'x'; // Change this to any key you prefer
-  const PAUSE_KEY = 'p'; // Press 'P' to pause/play
+  const PAUSE_KEY = 'z'; // Press 'Z' to pause/play
   const FAST_SPEED = 2.0;
   const NORMAL_SPEED = 1.0;
 
@@ -211,5 +211,5 @@
     }
   }, true);
 
-  console.log('[2x Toggle] Extension loaded. Press "X" to toggle video speed, "P" to pause/play.');
+  console.log('[2x Toggle] Extension loaded. Press "X" to toggle video speed, "Z" to pause/play.');
 })();
